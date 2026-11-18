@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c0d11">
+  <meta name="description" content="NEON CLASH 霓虹对决，一款可以邀请朋友参加的双人火柴人格斗街机。">
+  <title>NEON CLASH 霓虹对决 · Pixel Arcade</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b9fa52'/%3E%3Cpath d='M6 7h5l10 12-4 4L6 12zm20 0v5L12 26l-5-5L21 7z' fill='%230d1110'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./arcade.css">
+  <script defer src="./icons.js"></script>
+  <script defer src="./scenery.js"></script>
+  <script defer src="./combat.js"></script>
+  <script defer src="./relay.js"></script>
+  <script defer src="./net.js"></script>
+  <script defer src="./audio.js"></script>
+  <script defer src="./game.js"></script>
+  <script defer src="./arcade.js"></script>
+</head>
+<body>
+  <header class="topbar"><div class="top-inner">
+    <a class="brand" href="./" aria-label="Pixel Arcade 首页"><span class="brand-icon" data-i="brand"></span><span>PIXEL<span class="brand-faint"> ARCADE</span></span></a>
+    <div class="nav-divider"></div><span class="nav-current"><i></i> 格斗街机</span>
+    <div class="top-actions"><button class="top-button" id="help"><span data-i="key"></span><span>玩法说明</span></button><div class="nav-divider"></div><button class="top-button" id="sound" aria-pressed="true"><span data-i="volume"></span><span>音效 开</span></button></div>
+  </div></header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="game-title">
+      <div><div class="eyebrow"><span class="slashes" aria-hidden="true"></span> STICKMAN FIGHTING</div>
+      <h1 id="game-title"><span class="sr-only">NEON CLASH</span><canvas id="wordmark" width="830" height="100" aria-hidden="true"></canvas></h1>
+      <p class="subtitle"><strong>霓虹对决</strong><span></span>双人火柴人格斗竞技场</p></div>
+      <div class="game-format"><span data-i="trophy"></span> 三局两胜 <b>/</b> 每局 60 秒</div>
+    </section>
+    <div class="station">
+      <section class="cabinet" id="cabinet" aria-label="对战画面">
+        <div class="monitor-top"><div><i class="live-dot"></i><span>竞技场</span><b>/</b><strong id="stage-name">日落天台</strong></div><small id="stage-code">STAGE 01</small></div>
+        <div class="screen" id="screen">
+          <canvas id="game" width="1000" height="450" aria-label="双人火柴人格斗场"></canvas>
+          <div class="hud" aria-label="比分及血量">
+            <div class="fighter-hud one"><div class="tagline"><b>P1</b><strong>PLAYER 1</strong><span class="points"><i></i><i></i></span></div><div class="health"><div></div></div><small>100 HP</small></div>
+            <div class="clock"><strong id="clock">60</strong><span id="round">ROUND 01</span></div>
+            <div class="fighter-hud two"><div class="tagline"><b>P2</b><strong>PLAYER 2</strong><span class="points"><i></i><i></i></span></div><div class="health"><div></div></div><small>100 HP</small></div>
+          </div>
+          <div id="announcement" class="announcement" hidden><small></small><strong></strong></div>
+          <div class="screen-corner tl"></div><div class="screen-corner tr"></div><div class="screen-corner bl"></div><div class="screen-corner br"></div>
+        </div>
+        <div class="monitor-foot"><div class="status"><i class="live-dot"></i><span id="status">准备就绪</span></div><div class="monitor-actions"><span id="keyboard-tip"><kbd>ENTER</kbd> 开始对战</span><button id="pause" hidden title="暂停 / 继续" aria-label="暂停"><span data-i="pause"></span></button><button id="fullscreen" title="全屏" aria-label="全屏"><span data-i="expand"></span></button></div></div>
+        <div class="touch-deck" id="touch-deck" hidden></div>
+      </section>
+      <aside class="settings panel">
+        <div class="panel-title"><div><span data-i="sliders"></span><h2>对战设置</h2></div><span class="grille" aria-hidden="true"></span></div>
+        <div class="settings-inner">
+          <div class="mode-tabs" aria-label="对战模式"><button id="local" aria-pressed="true"><span data-i="pad"></span>同屏对战</button><button id="online" aria-pressed="false"><span data-i="wireless"></span>好友联机</button></div>
+          <div class="field"><div class="field-label"><h3>选择竞技场</h3><small id="arena-index">01 / 03</small></div><div id="arenas" class="arenas"></div></div>
+          <div class="field weapon-field"><div class="field-label"><h3>武器配置</h3></div><div id="weapons"></div></div>
+          <div id="local-actions"><button class="primary" id="start"><span data-i="play"></span><strong>开始对战</strong><span class="btn-arrow" data-i="arrow"></span></button><button class="back-setup" id="back-setup" hidden>结束本场并返回设置</button></div>
+          <div id="network-actions" hidden>
+            <div id="room-idle"><button class="primary" id="host"><span data-i="wireless"></span><strong>创建房间</strong><span class="btn-arrow" data-i="arrow"></span></button><form id="join-form"><input id="room-input" maxlength="6" placeholder="输入 6 位房间码" aria-label="房间码" autocomplete="off" autocapitalize="characters" spellcheck="false" required><button type="submit">加入</button></form></div>
+            <div id="room-live" hidden><div class="room-line">房间 <strong id="room-code"></strong><button id="copy" title="复制邀请链接" aria-label="复制邀请链接"><span data-i="copy"></span></button><button id="leave" title="离开房间" aria-label="离开房间"><span data-i="exit"></span></button></div><button class="primary" id="net-start" disabled><span data-i="play"></span><strong>等待好友加入</strong></button></div>
+            <p id="network-info" aria-live="polite"></p>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <section class="controls panel" id="controls"><div class="controls-title"><span data-i="key"></span><h2>操作指南</h2></div><div id="control-rows"></div></section>
+  </main>
+  <dialog id="guide"><div class="dialog-title"><h2>玩法说明</h2><button id="close-guide" aria-label="关闭"><span data-i="close"></span></button></div><p>把对手的血条打空即可拿下一局。每局 60 秒，时间结束时血量较高的一方获胜，平局重赛。先赢两局的一方赢得整场对决。</p><h3>武器</h3><p>光刃攻速和距离均衡，脉冲棍攻击最远、单次伤害最高，双刃出手最快。按住攻击可以连续出招，按住防御可以格挡，冲刺可快速调整距离。</p><h3>和朋友一起玩</h3><p>共用键盘请选择「同屏对战」。分开设备时选择「好友联机」，创建房间并复制邀请链接。双方选好斗士、武器和身法并准备就绪后开战。联机双方各自使用 P1 键位，也可以使用屏幕上的触控按钮。</p><button class="primary" id="guide-ok"><strong>知道了</strong></button></dialog>
+  <div class="sr-only" role="status" id="announcer"></div>
+</body>
+</html>
